@@ -17,7 +17,10 @@
 		F610A1951E2F4DAA00D854F6 /* NSString+PY_LinkSort.m in Sources */ = {isa = PBXBuildFile; fileRef = F610A1941E2F4DAA00D854F6 /* NSString+PY_LinkSort.m */; };
 		F610A19C1E2F63ED00D854F6 /* PYYShowImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F610A19A1E2F63ED00D854F6 /* PYYShowImageCell.m */; };
 		F610A19D1E2F63ED00D854F6 /* PYYShowImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F610A19B1E2F63ED00D854F6 /* PYYShowImageCell.xib */; };
-		F610A1A01E2F65FE00D854F6 /* PYYShowImageDrawImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F610A19F1E2F65FE00D854F6 /* PYYShowImageDrawImageCell.m */; };
+		F6FDBA331E304DE4000C62A9 /* PYPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = F6FDBA321E304DE4000C62A9 /* PYPhoto.m */; };
+		F6FDBA351E305F77000C62A9 /* PYYShow_AddImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F6FDBA341E305F77000C62A9 /* PYYShow_AddImage@2x.png */; };
+		F6FDBA391E309092000C62A9 /* PYYShowImageScrollVIewVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6FDBA381E309092000C62A9 /* PYYShowImageScrollVIewVCViewController.m */; };
+		F6FDBA3B1E30C7F6000C62A9 /* PYYTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FDBA3A1E30C7F6000C62A9 /* PYYTopView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +41,12 @@
 		F610A1991E2F63ED00D854F6 /* PYYShowImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYYShowImageCell.h; sourceTree = "<group>"; };
 		F610A19A1E2F63ED00D854F6 /* PYYShowImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYYShowImageCell.m; sourceTree = "<group>"; };
 		F610A19B1E2F63ED00D854F6 /* PYYShowImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PYYShowImageCell.xib; sourceTree = "<group>"; };
-		F610A19E1E2F65FE00D854F6 /* PYYShowImageDrawImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYYShowImageDrawImageCell.h; sourceTree = "<group>"; };
-		F610A19F1E2F65FE00D854F6 /* PYYShowImageDrawImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYYShowImageDrawImageCell.m; sourceTree = "<group>"; };
+		F6FDBA311E304DE4000C62A9 /* PYPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYPhoto.h; sourceTree = "<group>"; };
+		F6FDBA321E304DE4000C62A9 /* PYPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYPhoto.m; sourceTree = "<group>"; };
+		F6FDBA341E305F77000C62A9 /* PYYShow_AddImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PYYShow_AddImage@2x.png"; sourceTree = "<group>"; };
+		F6FDBA371E309092000C62A9 /* PYYShowImageScrollVIewVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PYYShowImageScrollVIewVCViewController.h; sourceTree = "<group>"; };
+		F6FDBA381E309092000C62A9 /* PYYShowImageScrollVIewVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYYShowImageScrollVIewVCViewController.m; sourceTree = "<group>"; };
+		F6FDBA3A1E30C7F6000C62A9 /* PYYTopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PYYTopView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +104,8 @@
 		F610A18F1E2F465300D854F6 /* PYYShowImageClass */ = {
 			isa = PBXGroup;
 			children = (
+				F6FDBA361E308F1D000C62A9 /* PYYShowImageScrollView */,
+				F6FDBA341E305F77000C62A9 /* PYYShow_AddImage@2x.png */,
 				F610A1901E2F469900D854F6 /* PYYShowImage.h */,
 				F610A1911E2F469900D854F6 /* PYYShowImage.m */,
 				F610A1931E2F4DAA00D854F6 /* NSString+PY_LinkSort.h */,
@@ -104,10 +113,20 @@
 				F610A1991E2F63ED00D854F6 /* PYYShowImageCell.h */,
 				F610A19A1E2F63ED00D854F6 /* PYYShowImageCell.m */,
 				F610A19B1E2F63ED00D854F6 /* PYYShowImageCell.xib */,
-				F610A19E1E2F65FE00D854F6 /* PYYShowImageDrawImageCell.h */,
-				F610A19F1E2F65FE00D854F6 /* PYYShowImageDrawImageCell.m */,
+				F6FDBA311E304DE4000C62A9 /* PYPhoto.h */,
+				F6FDBA321E304DE4000C62A9 /* PYPhoto.m */,
 			);
 			path = PYYShowImageClass;
+			sourceTree = "<group>";
+		};
+		F6FDBA361E308F1D000C62A9 /* PYYShowImageScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				F6FDBA371E309092000C62A9 /* PYYShowImageScrollVIewVCViewController.h */,
+				F6FDBA381E309092000C62A9 /* PYYShowImageScrollVIewVCViewController.m */,
+				F6FDBA3A1E30C7F6000C62A9 /* PYYTopView.xib */,
+			);
+			path = PYYShowImageScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,6 +189,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F610A1881E2F40DB00D854F6 /* LaunchScreen.storyboard in Resources */,
+				F6FDBA3B1E30C7F6000C62A9 /* PYYTopView.xib in Resources */,
+				F6FDBA351E305F77000C62A9 /* PYYShow_AddImage@2x.png in Resources */,
 				F610A1851E2F40DB00D854F6 /* Assets.xcassets in Resources */,
 				F610A1831E2F40DB00D854F6 /* Main.storyboard in Resources */,
 				F610A19D1E2F63ED00D854F6 /* PYYShowImageCell.xib in Resources */,
@@ -186,10 +207,11 @@
 				F610A1801E2F40DB00D854F6 /* ViewController.m in Sources */,
 				F610A17D1E2F40DB00D854F6 /* AppDelegate.m in Sources */,
 				F610A1951E2F4DAA00D854F6 /* NSString+PY_LinkSort.m in Sources */,
+				F6FDBA391E309092000C62A9 /* PYYShowImageScrollVIewVCViewController.m in Sources */,
 				F610A19C1E2F63ED00D854F6 /* PYYShowImageCell.m in Sources */,
 				F610A17A1E2F40DB00D854F6 /* main.m in Sources */,
-				F610A1A01E2F65FE00D854F6 /* PYYShowImageDrawImageCell.m in Sources */,
 				F610A1921E2F469900D854F6 /* PYYShowImage.m in Sources */,
+				F6FDBA331E304DE4000C62A9 /* PYPhoto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +372,7 @@
 				F610A18E1E2F40DB00D854F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

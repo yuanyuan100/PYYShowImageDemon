@@ -8,6 +8,7 @@
 
 #import "PYYShowImage.h"
 #import "PYYShowImageCell.h"
+#import "PYPhoto.h"
 
 #ifndef UI_SCREEN_WIDTH
 #define UI_SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
@@ -24,8 +25,7 @@ UIKIT_STATIC_INLINE CGSize PYGetSize(NSInteger count, CGFloat spacingLR, CGFloat
 
 @interface PYYShowImage () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
-
-
+@property (nonatomic, strong) NSMutableArray<PYPhoto *> *dataSource;
 
 /** 小图的Size */
 @property (nonatomic, readwrite, assign) CGSize size;
@@ -33,6 +33,11 @@ UIKIT_STATIC_INLINE CGSize PYGetSize(NSInteger count, CGFloat spacingLR, CGFloat
 @end
 
 @implementation PYYShowImage
+-(instancetype)initWithImageArray:(NSArray<PYPhoto *> *)array {
+    self = [self init];
+    [self.dataSource addObjectsFromArray:array];
+    return self;
+}
 - (instancetype)init
 {
     self = [super init];
@@ -54,7 +59,23 @@ UIKIT_STATIC_INLINE CGSize PYGetSize(NSInteger count, CGFloat spacingLR, CGFloat
 - (void)startInitUI {
     self.size = PYGetSize(_count, _spacingLF, _spacing);
     [self addSubview:self.collectionView];
-    self.height = _size.height + _spacingTB * 2;
+    [self setupViewFrame];
+}
+
+- (void)setupViewFrame {
+    self.height = _size.height + _size.height * self.dataSource.count / _count + _spacingTB * 2 + _spacing * self.dataSource.count / _count;
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.height);
+    _collectionView.frame = CGRectMake(_collectionView.frame.origin.x, _collectionView.frame.origin.y, _collectionView.frame.size.width, self.height -  _spacingTB * 2);
+}
+
+- (void)addImageArray:(NSArray<PYPhoto *> *)array {
+    [self.dataSource addObjectsFromArray:array];
+    [self setupViewFrame];
+    [_collectionView reloadData];
+}
+
+- (NSArray<PYPhoto *> *)getImageArray {
+    return _dataSource;
 }
 
 #pragma mark ---------- 初始化默认属性
@@ -63,6 +84,7 @@ UIKIT_STATIC_INLINE CGSize PYGetSize(NSInteger count, CGFloat spacingLR, CGFloat
     self.spacing = 12.0f;
     self.spacingLF = 11.0f;
     self.spacingTB = 15.0f;
+    self.number = 5;
 }
 
 
@@ -81,6 +103,7 @@ UIKIT_STATIC_INLINE CGSize PYGetSize(NSInteger count, CGFloat spacingLR, CGFloat
         view.delegate = self;
         view.dataSource = self;
         view.backgroundColor = [UIColor clearColor];
+        view.bounces = NO;
         
         [view registerNib:[UINib nibWithNibName:NSStringFromClass([PYYShowImageCell class]) bundle:nil] forCellWithReuseIdentifier:@"cell"];
         
@@ -89,16 +112,55 @@ UIKIT_STATIC_INLINE CGSize PYGetSize(NSInteger count, CGFloat spacingLR, CGFloat
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 1;
+    if (_number <= self.dataSource.count) {
+        return _number;
+    }
+    return self.dataSource.count + 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PYYShowImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    NSString *str = @"http://www.people.com.cn/mediafile/pic/20140611/53/2881261099810828949.jpg";
-    [cell refreshImage:str callBack:^(NSString * _Nonnull path) {
-        NSLog(@"path is %@", path);
-    }];
+    if (indexPath.item == self.dataSource.count && _number != self.dataSource.count) {
+        // 最后一个为增加item
+        [cell refreshDefaultImage:[UIImage imageNamed:@"PYYShow_AddImage@2x"]];
+    } else {
+        [cell refreshModel:self.dataSource[indexPath.item]];
+    }
     return cell;
+
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item == self.dataSource.count && _number != self.dataSource.count) {
+        // 最后一个为增加item
+        if (self.AddImageBlock) {
+            NSArray<PYPhoto*> *dataSource = self.AddImageBlock(_number - indexPath.item - 1);
+            if (dataSource.count > 0) {
+                [self.dataSource addObjectsFromArray:dataSource];
+                [self setupViewFrame];
+                [collectionView reloadData];
+            }
+        }
+    } else {
+        if (self.SeeBigImageBlock) {
+            NSArray<PYPhoto *> *deleArr = self.SeeBigImageBlock(self.dataSource, indexPath.item);
+            for (PYPhoto *deleModel in deleArr) {
+                [self.dataSource removeObject:deleModel];
+            }
+            if (deleArr.count > 0) {
+                [self setupViewFrame];
+                [collectionView reloadData];
+            }
+        }
+        
+    }
+}
+
+- (NSMutableArray<PYPhoto *> *)dataSource {
+    if (!_dataSource) {
+        _dataSource = [[NSMutableArray alloc] init];
+    }
+    return _dataSource;
 }
 @end
 
