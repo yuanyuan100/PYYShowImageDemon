@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PYYShowImageDemon/PYYShowImageClass/PYYShowImageScrollView/PYYShowImageScrollVIewVCViewController.m"
-            timestampString = "506521736.691336"
+            timestampString = "506569332.300994"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
-            landmarkName = "-didReceiveMemoryWarning"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
+            landmarkName = "-deleImage:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,11 +26,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PYYShowImageDemon/PYYShowImageClass/PYYShowImageScrollView/PYYShowImageScrollVIewVCViewController.m"
-            timestampString = "506521798.88091"
+            timestampString = "506569332.300994"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "-deleImage:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PYYShowImageDemon/PYYShowImageClass/PYYShowImageScrollView/PYYShowImageScrollVIewVCViewController.m"
+            timestampString = "506569332.300994"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
+            landmarkName = "-setImageCount:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PYYShowImageDemon/PYYShowImageClass/PYYShowImageScrollView/PYYShowImageScrollVIewVCViewController.m"
+            timestampString = "506569332.300994"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "-scrollViewDidEndDecelerating:"
             landmarkType = "7">
          </BreakpointContent>

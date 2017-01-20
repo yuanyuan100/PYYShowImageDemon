@@ -32,10 +32,11 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
 @property (nonatomic, strong) UIImageView *imageL;
 @property (nonatomic, strong) UIImageView *imageM;
 @property (nonatomic, strong) UIImageView *imageR;
-@property (nonatomic, strong) UIActivityIndicatorView *activityView;
+//@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIButton *deleBtn;
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UILabel *textNumber;
+@property (nonatomic, strong) UIView *realTopView;
 
 @property (nonatomic, strong) NSMutableArray<PYPhoto*> *dataSource;
 @property (nonatomic, assign) NSInteger imageCount;
@@ -71,14 +72,30 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.scrollView];
-    [self.view addSubview:self.activityView];
+//    [self.view addSubview:self.activityView];
     UIView *view = [[NSBundle mainBundle] loadNibNamed:@"PYYTopView" owner:self options:nil][0];
     view.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, 64);
     self.textNumber.text = [NSString stringWithFormat:@"%ld/%ld", _index+1, self.dataSource.count];
     [self.view addSubview:view];
+    self.realTopView = view;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCurrent)];
+    [self.scrollView addGestureRecognizer:tap];
     
     [self showImage];
 }
+
+- (void)clickCurrent {
+    if (self.realTopView.frame.origin.y == 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.realTopView.frame = CGRectMake(0, -64, UI_SCREEN_WIDTH, 64);
+        }];
+    } else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.realTopView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, 64);
+        }];
+    }
+}
+
 #pragma mark --------- showImage
 - (void)showImage {
     switch (self.dataSource.count) {
@@ -96,7 +113,7 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
             } else {
                 [self asyncCurrentImage:self.imageM model:self.dataSource[_index]];
                 [self asyncLoadImage:self.imageL model:self.dataSource[0]];
-                self.position = PYYShowImageScrollViewPositionRight;
+                self.position = PYYShowImageScrollViewPositionMiddle;
                 _tempContentOffset = CGPointMake(UI_SCREEN_WIDTH, 0);
                 self.scrollView.contentOffset = _tempContentOffset;
             }
@@ -138,7 +155,8 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
             _tempContentOffset = scrollView.contentOffset;
         } else if (self.dataSource.count == 1) {
             self.index = 0;
-            [self asyncCurrentImage:self.imageM model:self.dataSource[0]];
+            [self asyncCurrentImage:self.imageL model:self.dataSource[0]];
+            
         }
     } else {
         self.position = PYYShowImageScrollViewPositionRight;
@@ -161,11 +179,12 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
             self.index = 1;
             [self asyncCurrentImage:self.imageM model:self.dataSource[1]];
             [self asyncLoadImage:self.imageL model:self.dataSource[0]];
+            self.position = PYYShowImageScrollViewPositionMiddle;
             
             _tempContentOffset = scrollView.contentOffset;
         } else if (self.dataSource.count == 1) {
             self.index = 0;
-            [self asyncCurrentImage:self.imageM model:self.dataSource[0]];
+            [self asyncCurrentImage:self.imageL model:self.dataSource[0]];
         }
     }
 }
@@ -192,9 +211,9 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
 
 // 展示时加载的图片
 - (void)asyncCurrentImage:(UIImageView *)imageView model:(PYPhoto *)model {
-    if (!self.activityView.isAnimating) {
-        [self.activityView startAnimating];
-    }
+//    if (!self.activityView.isAnimating) {
+//        [self.activityView startAnimating];
+//    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if ([model.bigUniquePaht isLocalFile]) {
             NSData *data = [NSData dataWithContentsOfFile:model.bigUniquePaht];
@@ -231,9 +250,9 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
             }
         }
         imageView.image = image;
-        if (self.activityView.isAnimating && isStop) {
-            [self.activityView stopAnimating];
-        }
+//        if (self.activityView.isAnimating && isStop) {
+//            [self.activityView stopAnimating];
+//        }
     });
 }
 
@@ -272,7 +291,6 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
         self.DeleIndexBlock(self.dataSource[_index]);
     }
     [self.dataSource removeObjectAtIndex:_index];
-    self.imageCount = self.dataSource.count;
     
     if (self.dataSource.count == 0) {
         [self cancelBack:nil];
@@ -281,16 +299,22 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
     }
     
     if (self.position == PYYShowImageScrollViewPositionMiddle) {
-        if (self.dataSource.count <= 2) {
+        if (self.dataSource.count == 2) {
+            self.position = PYYShowImageScrollViewPositionRight;
+            [_scrollView setContentOffset:CGPointMake(UI_SCREEN_WIDTH * 2, 0)];
+        } else {
             self.position = PYYShowImageScrollViewPositionLeft;
+            [_scrollView setContentOffset:CGPointMake(0, 0)];
         }
-        [_scrollView setContentOffset:CGPointMake(0, 0)];
+        
         [self scrollViewDidEndDecelerating:_scrollView];
     } else if (self.position == PYYShowImageScrollViewPositionLeft) {
         [_scrollView setContentOffset:CGPointMake(UI_SCREEN_WIDTH, 0)];
         [self scrollViewDidEndDecelerating:_scrollView];
         
     }
+    
+    self.imageCount = self.dataSource.count;
 }
 
 #pragma mark --------- setter
@@ -401,21 +425,21 @@ typedef NS_ENUM(NSUInteger, PYYShowImageScrollViewPosition) {
     });
 }
 
-- (UIActivityIndicatorView *)activityView {
-    if (_activityView) {
-        return _activityView;
-    }
-    return _activityView = ({
-        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(UI_SCREEN_WIDTH / 2 - 25, UI_SCREEN_HEIGHT / 2 - 25, 50, 50)];
-        view.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-        view.hidesWhenStopped = YES;
-        if (view.isAnimating) {
-            [view stopAnimating];
-        }
-        
-        view;
-    });
-}
+//- (UIActivityIndicatorView *)activityView {
+//    if (_activityView) {
+//        return _activityView;
+//    }
+//    return _activityView = ({
+//        UIActivityIndicatorView *view = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(UI_SCREEN_WIDTH / 2 - 25, UI_SCREEN_HEIGHT / 2 - 25, 50, 50)];
+//        view.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+//        view.hidesWhenStopped = YES;
+//        if (view.isAnimating) {
+//            [view stopAnimating];
+//        }
+//        
+//        view;
+//    });
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
